@@ -1,4 +1,4 @@
-import { Encoders } from "../../dist/gwmtc";
+import { Encoders, U2FKey, PostOrderRequest } from "../../dist/gwmtc";
 
 describe("Global", () => 
 {
@@ -14,5 +14,25 @@ describe("Global", () =>
     {
         expect(Encoders.Base58Check.EncodeData([0x00, 0x08,0x6e,0xaa,0x67,0x78,0x95,0xf9,0x2d,0x4a,0x6c,0x5e,0xf7,0x40,0xc1,0x68,0x93,0x2b,0x5e,0x3f,0x44])).toEqual("1mayif3H2JDC62S4N3rLNtBNRAiUUP99k");
         expect(Encoders.Base58Check.DecodeData("1mayif3H2JDC62S4N3rLNtBNRAiUUP99k")).toEqual([0x00,0x08,0x6e,0xaa,0x67,0x78,0x95,0xf9,0x2d,0x4a,0x6c,0x5e,0xf7,0x40,0xc1,0x68,0x93,0x2b,0x5e,0x3f,0x44]);
+    });
+
+    it("Can convert base58 back and forth", () =>
+    {
+        expect(Encoders.Base58Check.EncodeData([0x00, 0x08,0x6e,0xaa,0x67,0x78,0x95,0xf9,0x2d,0x4a,0x6c,0x5e,0xf7,0x40,0xc1,0x68,0x93,0x2b,0x5e,0x3f,0x44])).toEqual("1mayif3H2JDC62S4N3rLNtBNRAiUUP99k");
+        expect(Encoders.Base58Check.DecodeData("1mayif3H2JDC62S4N3rLNtBNRAiUUP99k")).toEqual([0x00,0x08,0x6e,0xaa,0x67,0x78,0x95,0xf9,0x2d,0x4a,0x6c,0x5e,0xf7,0x40,0xc1,0x68,0x93,0x2b,0x5e,0x3f,0x44]);
+    });
+
+    it("Can Sign request", () =>
+    {
+        // var signer = new U2FKey('26767c0e98fbdc8e1647ab5f83a473abc88096279758aebeb6d3d464963286c8');
+
+        var order : PostOrderRequest = new PostOrderRequest();
+        order.baseCurrency = "CHF";
+        order.customReference = "order_chf_btc_1492782718";
+        order.nonce =  0x163DBE788E9;
+        order.destination = 'mh653rQbnj5LF6Hb4eLK1q3SeELCgfabAg';
+        order.amount = 0x186A0;        
+        var data = order.GetDataToSign();
+        expect(Encoders.Hex.EncodeData(data)).toEqual("7694fdd54949ba51af148c7531e11d2eaeb51371187ef65e1afae20a20ab6e6e01000000017afc4dc640c01519b7fae38b01e14625e6abb8d44f5f532516987fa92d4a66c9");
     });
 });

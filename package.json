@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@types/jasmine": "^2.5.47",
+    "@types/node": "^7.0.18",
     "base58check": "^2.0.0"
   }
 }

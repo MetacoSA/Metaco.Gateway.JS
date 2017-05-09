@@ -52,6 +52,7 @@
     "./gwmtc.ts"
   ],
   "include": [
-    "./@types/**/*.ts"
+    "./@types/**/*.ts",
+    "../node_modules/@types/**/*.ts"
   ]
 }
