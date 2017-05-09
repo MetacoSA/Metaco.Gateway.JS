@@ -1,0 +1,21 @@
+{
+  "name": "metaco.gateway",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc -p ./lib",
+    "test": "tsc -p ./lib && tsc -p ./tests && cd tests && (jasmine || echo done)",
+    "build_browser_debug": "tsc -p ./lib && tsc -p ./tests && browserify --entry ./tests/dist/allSpecs.js --outfile ./tests/dist/tests.js -d"
+  },
+  "author": "Metaco SA",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "jasmine": "^2.6.0",
+    "typescript": "^2.3.2"
+  },
+  "dependencies": {
+    "@types/jasmine": "^2.5.47",
+    "base58check": "^2.0.0"
+  }
+}
