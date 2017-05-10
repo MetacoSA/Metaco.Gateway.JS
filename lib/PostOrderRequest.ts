@@ -16,7 +16,7 @@ export class PostOrderRequest {
 
     }
 
-    public GetDataToSign(): number[] {
+    public GetDataToSign(): string {
         //Decode base58
         var addrBytes = Encoders.Base58Check.DecodeData(this.destination);
         //Skip first byte, take 32 next
@@ -35,6 +35,6 @@ export class PostOrderRequest {
 
         dataStr = "7694fdd54949ba51af148c7531e11d2eaeb51371187ef65e1afae20a20ab6e6e0100000001" +
                   Encoders.Hex.EncodeData(hashNumbers);
-        return Encoders.Hex.DecodeData(dataStr);
+        return dataStr;
     }
 }

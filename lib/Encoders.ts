@@ -13,7 +13,7 @@ class HexEncoder implements Encoder {
     }
 
     public DecodeData(str: string): number[] {
-        var result = [];
+        var result: number[] = [];
         var index: number = 0;
         for (index = 0; index < str.length - 1; index += 2) {
 
