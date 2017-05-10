@@ -7,11 +7,11 @@
             "name": "Launch Chrome against localhost",
             "preLaunchTask": "build_test",
             "url": "file:///E:/Sources/Metaco.Gateway.JS/tests/SpecRunner.html",
-            "webRoot": "file:///E:/Sources/Metaco.Gateway.JS/tests/SpecRunner.html",
+            "webRoot": "${workspaceRoot}",
+            "sourceMaps": true,
             "sourceMapPathOverrides": {
-                 "*": "${workspaceRoot}/tests/spec/*"
-            },
-            "sourceMaps": true
+                "*": "${webRoot}/*"
+            }
         },
         {
             "type": "chrome",

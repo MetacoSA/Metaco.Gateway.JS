@@ -1,4 +1,4 @@
-import { Encoders, U2FKey, PostOrderRequest } from "../../dist/gwmtc";
+import { Encoders, U2FKey, PostOrderRequest } from "../../lib/gwmtc";
 
 describe("Global", () => 
 {
