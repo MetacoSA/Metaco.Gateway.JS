@@ -49,8 +49,16 @@ describe("Global", () => {
         order.amount = 0x186A0;
         var data = order.GetDataToSign();
         expect(data).toEqual("7694fdd54949ba51af148c7531e11d2eaeb51371187ef65e1afae20a20ab6e6e01000000017afc4dc640c01519b7fae38b01e14625e6abb8d44f5f532516987fa92d4a66c9");
-        
         var sig = signer.Sign(data);
         expect(sig).toEqual("30450220321281c8c9b8cf8661def0e459767b2ca3e89b1fad796ddcee8ddf55beca3032022100f0f77f63b03070af6d26885945089da461c3dd3edcfbdc99e051a1cfcba6fb47");
+
+        order.nonce = 0;
+        order.requesterPubKey = "";
+        order.signature = "";
+        order.Sign(signer);
+
+        expect(order.nonce).not.toEqual(0);
+        expect(order.signature).not.toBeNull();
+        expect(order.requesterPubKey).not.toEqual("");
     });
 });
