@@ -5,7 +5,7 @@ The REST API is documented on [apiary](http://docs.gateway20.apiary.io/#).
 
 # How to use
 
-Include gwmtc.js in your page, you can then access gwmtc.
+Include [gwmtc.js](https://aois.blob.core.windows.net/public/gwmtc.js) in your page, you can then access gwmtc.
 
 
 ```
@@ -26,7 +26,7 @@ while (true) {
         break;
 }
 ```
-ApiClient functions returns promise. If you do not have access to async/await, use `done(callback)` as specified by [promisejs](https://www.promisejs.org/).
+`ApiClient` functions returns promise. If you do not have access to async/await, use `done(callback)` as specified by [promisejs](https://www.promisejs.org/).
 
 # How to Build?
 
