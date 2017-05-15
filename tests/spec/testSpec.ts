@@ -1,4 +1,4 @@
-import { Encoders, U2FKey, U2FPubKey, PostOrderRequest } from "../../lib/gwmtc";
+import { Encoders, U2FKey, U2FPubKey, PostOrderRequest, ApiClient } from "../../lib/gwmtc";
 import * as elliptic from "elliptic";
 
 describe("Global", () => {
@@ -61,4 +61,31 @@ describe("Global", () => {
         expect(order.signature).not.toBeNull();
         expect(order.requesterPubKey).not.toEqual("");
     });
+
+    if (XMLHttpRequest != null) {
+        it("Can send request to gateway", async (done) => {
+            var api = new ApiClient("https://api.gateway.metaco.com/v1/tbtc", "abcdefg");
+            var signer = new U2FKey('26767c0e98fbdc8e1647ab5f83a473abc88096279758aebeb6d3d464963286c8');
+            var order: PostOrderRequest = new PostOrderRequest();
+            order.baseCurrency = "CHF";
+            order.customReference = "order_chf_btc_1492782718";
+            order.nonce = 0x163DBE788E9;
+            order.destination = 'mh653rQbnj5LF6Hb4eLK1q3SeELCgfabAg';
+            order.amount = 0x186A0;
+            order.Sign(signer);
+            var response = await api.PostOrder(order);
+            expect(response.customReference).toEqual("order_chf_btc_1492782718");
+            expect(response.orderId).not.toBeNull();
+
+            var info;
+            while(true)
+            {
+                 info = await api.GetOrder(response.orderId);
+                if(info.state != "Requested")
+                    break;
+            }
+            expect(info.errorCode).toEqual("invalid-nonce");
+            done();
+        });
+    }
 });
