@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc -p ./lib",
     "test": "tsc -p ./tests && cd tests && (jasmine || echo done)",
+    "build_browser": "browserify ./lib/gwmtc.ts -p [tsify -p ./lib] --outfile ./dist/gwmtc.js",
     "build_browser_debug": "browserify ./tests/spec/allSpecs.ts -p [tsify -p ./tests] --outfile ./tests/dist/tests.js --debug"
   },
   "author": "Metaco SA",
