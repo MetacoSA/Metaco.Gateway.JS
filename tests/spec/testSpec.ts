@@ -1,6 +1,7 @@
 import { Encoders, U2FKey, U2FPubKey, PostOrderRequest, ApiClient } from "../../lib/gwmtc";
 import * as elliptic from "elliptic";
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 describe("Global", () => {
     it("Can generate private and public keys", () => {
         for (var i = 0; i < 300; i++) {
@@ -78,10 +79,9 @@ describe("Global", () => {
             expect(response.orderId).not.toBeNull();
 
             var info;
-            while(true)
-            {
-                 info = await api.GetOrder(response.orderId);
-                if(info.state != "Requested")
+            while (true) {
+                info = await api.GetOrder(response.orderId);
+                if (info.state != "Requested")
                     break;
             }
             expect(info.errorCode).toEqual("invalid-nonce");
