@@ -26,17 +26,22 @@ export class PostOrderRequest {
     public GetDataToSign(): string {
         //Decode base58
         var addrBytes = Encoders.Base58Check.DecodeData(this.destination);
-        //Skip first byte, take 32 next
-        addrBytes = addrBytes.slice(1, 32);
+        var isP2SH = addrBytes[0] == 5 || addrBytes[0] == 196;
+        var isP2PKH = addrBytes[0] == 0 || addrBytes[0] == 111;
+
+        if((!isP2PKH && !isP2SH) || addrBytes.length != 21)
+            throw "Invalid-Format";
+        //Skip first byte
+        addrBytes = addrBytes.slice(1, 21);
 
         var dataStr =
             //(nonce in big endian, 8 bytes)
             Encoders.Hex.EncodeData(Utils.ToBytes(this.nonce, false)) +
             //(amount in little endian, 8 bytes)
             Encoders.Hex.EncodeData(Utils.ToBytes(this.amount, true)) +
-            "1976a914" +
+            (isP2SH ? "17a914" : "1976a914") +
             Encoders.Hex.EncodeData(addrBytes) +
-            "88ac";
+            (isP2SH ? "87" : "88ac");
         var hash = crypto.createHash("sha256").update(new Buffer(dataStr, 'hex')).digest();
         var hashNumbers = Utils.BufferToNumbers(hash);
 
